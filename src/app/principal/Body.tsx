@@ -3,18 +3,18 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import MapPanel from '../mapas/MapPanel';
 import useUserLocation from '../utiles/geolocalizadores/useUserLocation';
-import Geocoder from '../utiles/geolocalizadores/Geocoder';
+import useGeocoder from '../utiles/geolocalizadores/Geocoder';
 import Carrusel from '../carrusel';
 import PiePagina from './piePagina';
-import useGeocoder from '../utiles/geolocalizadores/Geocoder';
 import DashboardCercanos from '../elementos/dashboardCercanos';
+import { useRouter } from 'next/router';
 
 const Body = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const userLocation = useUserLocation();
-    const userLocationLat = userLocation ? userLocation.lat : 0;
-    const userLocationLng = userLocation ? userLocation.lng : 0;
-    const { direccion } = useGeocoder({ lat: userLocationLat, lng: userLocationLng });
+    const userLocationLat = useUserLocation()?.lat;
+    const userLocationLng = useUserLocation()?.lng;
+    const { direccion } = useGeocoder({ lat: userLocationLat ? userLocationLat : 0, lng: userLocationLng ? userLocationLng : 0 });
+    const router = useRouter();
 
     const openModal = () => {
         setModalIsOpen(true);
@@ -22,6 +22,15 @@ const Body = () => {
 
     const closeModal = () => {
         setModalIsOpen(false);
+    };
+
+    const handleNavigate = (path: string) => {
+        router.push(path);
+    };
+
+    const handleCardClick = (id: string) => {
+        localStorage.setItem('selectedRestaurantId', id);
+        handleNavigate('/paginaRestaurante');
     };
 
     return (
@@ -62,12 +71,12 @@ const Body = () => {
                 }}
             >
                 <button 
-                            className="mb-3 mr-4 accept-button mt-0 tracking-wide font-semibold bg-orange-400 text-white py-3 px-5 rounded-3xl hover:bg-orange-500 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none" 
-                            style={{ position: 'absolute', bottom: '20px', right: '10px', zIndex: '1100' }} 
-                            onClick={closeModal}
-                            >
-                            Volver
-                            </button>
+                    className="mb-3 mr-4 accept-button mt-0 tracking-wide font-semibold bg-orange-400 text-white py-3 px-5 rounded-3xl hover:bg-orange-500 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none" 
+                    style={{ position: 'absolute', bottom: '20px', right: '10px', zIndex: '1100' }} 
+                    onClick={closeModal}
+                >
+                    Volver
+                </button>
                 <MapPanel centro={[(userLocationLat != null) ? userLocationLat : 0.0, (userLocationLng != null) ? userLocationLng : 0.0]} />
             </Modal>
 
@@ -76,12 +85,14 @@ const Body = () => {
                     <>
                         <div className="lg:w-full">
                             <h1 className="lg:font-bold lg:ml-8 lg:mt-11 xl:text-2xl font-bold mt-5 ml-3 text-lg">¿Qué buscas hoy?</h1> 
-                            <h1 className="lg:ml-10"> <Carrusel></Carrusel></h1>
-                            
+                            <h1 className="lg:ml-10"> <Carrusel /></h1>
+                            <a href="./todosPage">
+                                <img src="negocios4.jpg" className="mt-5 mx-auto rounded-xl w-11/12 lg:h-48 transition-transform duration-300 hover:scale-105 h-20" alt="Todos Negocios"/>
+                            </a>
                         </div>
                         <h1 className="lg:font-bold lg:ml-8 lg:mt-11 xl:text-2xl font-bold mt-5 ml-3 text-lg">Negocios cercanos a ti</h1> 
                         <DashboardCercanos centro={[(userLocationLng != null) ? userLocationLng : 0.0, (userLocationLat != null) ? userLocationLat : 0.0]} /> 
-                        
+                        <PiePagina />
                     </>
                 )}
             </div>
