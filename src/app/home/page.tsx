@@ -9,7 +9,7 @@ const Page = () => {
   return ( 
     <div className="overflow-hidden">
         <Header></Header>
-        <Body></Body>
+        
     </div>
   );
 };
