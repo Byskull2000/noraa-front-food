@@ -7,7 +7,6 @@ import { cargarAvistamientos } from '../utiles/consultores/avistamientos';
 import ImgConstructor from '../utiles/multimedia/ImgConstructor';
 import { useRouter } from 'next/navigation';  
 
-
 interface MapPanelProps {
   centro: [number, number];
 }
@@ -23,26 +22,29 @@ const MapPanel: React.FC<MapPanelProps> = ({ centro }: MapPanelProps) => {
     localStorage.setItem('selectedRestaurantId', id);
     if (typeof window !== 'undefined') {
       router.push('/paginaRestaurante'); // Redirige usando next/router
-    }
+    }
   };
 
   useEffect(() => {
-    // Cargar todos los restaurantes
-    cargarRestaurantes()
-      .then(data => {
-        setRestaurantes(data);
-      })
-      .catch(error => {
-        console.error('Error al cargar todos los restaurantes:', error);
-      });
+    // Asegurarse de que solo se ejecute en el cliente
+    if (typeof window !== 'undefined') {
+      // Cargar todos los restaurantes
+      cargarRestaurantes()
+        .then(data => {
+          setRestaurantes(data);
+        })
+        .catch(error => {
+          console.error('Error al cargar todos los restaurantes:', error);
+        });
 
-    cargarAvistamientos()
-      .then(data => {
-        setAvistamientos(data);
-      })
-      .catch(error => {
-        console.error('Error al cargar avistamientos en el map Panel', error);
-      });
+      cargarAvistamientos()
+        .then(data => {
+          setAvistamientos(data);
+        })
+        .catch(error => {
+          console.error('Error al cargar avistamientos en el map Panel', error);
+        });
+    }
   }, [centro]);
 
   const handleMapClick = () => {
@@ -53,6 +55,11 @@ const MapPanel: React.FC<MapPanelProps> = ({ centro }: MapPanelProps) => {
     setRestauranteSeleccionado(restaurante);
     setShowDetail(true);
   };
+
+  // Asegurarse de que solo se renderiza en el cliente
+  if (typeof window === 'undefined') {
+    return null;
+  }
 
   return (
     <div onClick={handleMapClick}>

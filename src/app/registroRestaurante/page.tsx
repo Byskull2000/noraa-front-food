@@ -5,7 +5,7 @@ const Page = () => {
 
   return ( 
     <div className="overflow-hidden">
-      {/*<RegistroRestaurante />*/}
+      <RegistroRestaurante />
     </div>
   );
 };
