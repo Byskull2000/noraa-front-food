@@ -38,7 +38,36 @@ const Body = () => {
                 </button>
             </div>
 
-            
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                contentLabel="Mapa Modal"
+                style={{
+                    content: {
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        right: 'auto',
+                        bottom: 'auto',
+                        background: 'transparent',
+                        border: 'none',
+                        padding: '0',
+                        marginRight: '-50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '100%',
+                        height: '100%',
+                        justifyContent: 'center', alignItems: 'center'
+                    },
+                }}
+            >
+                <button 
+                            className="mb-3 mr-4 accept-button mt-0 tracking-wide font-semibold bg-orange-400 text-white py-3 px-5 rounded-3xl hover:bg-orange-500 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none" 
+                            style={{ position: 'absolute', bottom: '20px', right: '10px', zIndex: '1100' }} 
+                            onClick={closeModal}
+                            >
+                            Volver
+                            </button>
+            </Modal>
 
             <div className="lg:w-full">
                 {!modalIsOpen && (
