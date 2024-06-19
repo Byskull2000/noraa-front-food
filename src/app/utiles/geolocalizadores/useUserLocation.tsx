@@ -12,7 +12,7 @@ const useUserLocation = (): UserLocation | null => {
 
   useEffect(() => {
     const getUserLocation = () => {
-      if (navigator.geolocation) {
+      if (typeof window !== 'undefined' && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             setUserLocation({ lat: position.coords.latitude, lng: position.coords.longitude });

@@ -11,9 +11,10 @@ import DashboardCercanos from '../elementos/dashboardCercanos';
 
 const Body = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const userLocationLat = useUserLocation()?.lat;
-    const userLocationLng = useUserLocation()?.lng;
-    const { direccion } = useGeocoder({ lat: userLocationLat ? userLocationLat : 0, lng: userLocationLng ? userLocationLng : 0 });
+    const userLocation = useUserLocation();
+    const userLocationLat = userLocation ? userLocation.lat : 0;
+    const userLocationLng = userLocation ? userLocation.lng : 0;
+    const { direccion } = useGeocoder({ lat: userLocationLat, lng: userLocationLng });
 
     const openModal = () => {
         setModalIsOpen(true);
