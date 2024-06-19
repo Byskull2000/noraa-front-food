@@ -8,13 +8,15 @@ import Carrusel from '../carrusel';
 import PiePagina from './piePagina';
 import useGeocoder from '../utiles/geolocalizadores/Geocoder';
 import DashboardCercanos from '../elementos/dashboardCercanos';
+import { useRouter } from 'next/navigation';
 
 const Body = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const userLocationLat = useUserLocation()?.lat;
     const userLocationLng = useUserLocation()?.lng;
     const { direccion } = useGeocoder({ lat: userLocationLat ? userLocationLat : 0, lng: userLocationLng ? userLocationLng : 0 });
-
+    const router = useRouter();
+    
     const openModal = () => {
         setModalIsOpen(true);
     };
@@ -22,6 +24,11 @@ const Body = () => {
     const closeModal = () => {
         setModalIsOpen(false);
     };
+
+    const handleCardClick = (id: string) => {
+        localStorage.setItem('selectedRestaurantId', id);
+        router.push('/paginaRestaurante');
+      };
 
     return (
         <>
@@ -67,7 +74,7 @@ const Body = () => {
                             >
                             Volver
                             </button>
-                {<MapPanel centro={[(userLocationLat != null) ? userLocationLat : 0.0, (userLocationLng != null) ? userLocationLng : 0.0]} />}
+                {<MapPanel centro={[(userLocationLat != null) ? userLocationLat : 0.0, (userLocationLng != null) ? userLocationLng : 0.0]} onCardClick={handleCardClick}/>}
             </Modal>
 
             <div className="lg:w-full">

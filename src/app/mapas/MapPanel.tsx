@@ -17,9 +17,10 @@ const StarIcon = () => (
 
 interface MapPanelProps {
   centro: [number, number];
+  onCardClick: (id: string, nombre: string) => void;  // Añade el nombre como argumento
 }
 
-const MapPanel: React.FC<MapPanelProps> = ({ centro }: MapPanelProps) => {
+const MapPanel: React.FC<MapPanelProps> = ({ centro, onCardClick }) => {
   const [restaurantes, setRestaurantes] = useState<any[]>([]);
   const [avistamientos, setAvistamientos] = useState<any[]>([]);
   const [restauranteSeleccionado, setRestauranteSeleccionado] = useState<any>(null);
@@ -139,7 +140,7 @@ const MapPanel: React.FC<MapPanelProps> = ({ centro }: MapPanelProps) => {
             onClick={(e) => e.stopPropagation()}
           >
             <a href="paginaRestaurante" key={restauranteSeleccionado.id_restaurante} 
-              onClick={() => handleCardClick(restauranteSeleccionado.id_restaurante, restauranteSeleccionado.nombre_restaurante)} // Attach click event handler
+              onClick={() => onCardClick(restauranteSeleccionado.id_restaurante, restauranteSeleccionado.nombre_restaurante)} // Attach click event handler
               className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 sm:items-start sm:place-items-start" style={{ textDecoration: 'none', margin: '1%', width: '48%', maxWidth: '48%' }}>
                 {restauranteSeleccionado.imagen && (
                   <ImgConstructor
