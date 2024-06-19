@@ -2,6 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import ImgConstructor from "../utiles/multimedia/ImgConstructor";
 import { cargarRestaurantes, cargarRestaurantesConEtiqueta } from "../utiles/consultores/restaurantes";
+import { useRouter } from 'next/navigation';  // Importa desde 'next/navigation'
+interface ListaLocalesProps {
+  etiqueta: string;
+  onCardClick: (id: string, nombre: string) => void;  // Añade el nombre como argumento
+}
 
 const StarIcon = () => (
   <span className="ml-1 sm:ml-2">
@@ -11,43 +16,39 @@ const StarIcon = () => (
   </span>
 );
 
-const ListaLocales: React.FC<{ etiqueta: string }> = ({ etiqueta }) => {
+const ListaLocales: React.FC<ListaLocalesProps> = ({ etiqueta, onCardClick }) => {
   const [locales, setLocales] = useState<any[]>([]);
-
-  const handleCardClick = (id: string) => {
-    localStorage.setItem('selectedRestaurantId', id);
-    window.location.href = 'paginaRestaurante';  // Redirige a la nueva página
-  };
+  const router = useRouter();
 
   useEffect(() => {
-    
-    if (etiqueta === "") {
-      cargarRestaurantes()
-        .then(data => {
-          setLocales(data);
-        })
-        .catch(error => {
-          console.error('Error al cargar todos los restaurantes:', error);
-        });
-    } else {
-      cargarRestaurantesConEtiqueta(etiqueta)
-        .then(data => {
-          setLocales(data);
-        })
-        .catch(error => {
-          console.error('Error al cargar los restaurantes:', error);
-        });
-    }
+    const cargarLocales = async () => {
+      try {
+        let data;
+        if (etiqueta === "") {
+          data = await cargarRestaurantes();
+        } else {
+          data = await cargarRestaurantesConEtiqueta(etiqueta);
+        }
+        setLocales(data);
+      } catch (error) {
+        console.error('Error al cargar los restaurantes:', error);
+      }
+    };
+
+    cargarLocales();
   }, [etiqueta]);
 
-  
+  const handleCardClick = (id: string, nombre: string) => {
+    localStorage.setItem('selectedRestaurantId', id);
+    router.push(`/paginaRestaurante/${encodeURIComponent(nombre)}`);
+  };
 
   return (
     <div className="mt-1 mx-1 bg-white" style={{ height: 'auto', width: '100%', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
       {locales.map((local) => (
-        <a href="paginaRestaurante" key={local.id_restaurante} 
-        onClick={() => handleCardClick(local.id_restaurante)} // Attach click event handler
-        className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 sm:items-start sm:place-items-start" style={{ textDecoration: 'none', margin: '1%', width: '48%', maxWidth: '48%' }}>
+        <div key={local.id_restaurante} 
+          onClick={() => onCardClick(local.id_restaurante, local.nombre_restaurante)}  // Pasar nombre_restaurante como argumento
+          className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 sm:items-start sm:place-items-start" style={{ textDecoration: 'none', margin: '1%', width: '48%', maxWidth: '48%' }}>
           {local.imagen && (
             <ImgConstructor
               imgBytea={local.imagen}
@@ -60,7 +61,7 @@ const ListaLocales: React.FC<{ etiqueta: string }> = ({ etiqueta }) => {
             <p className="mt-1 font-normal text-xs lg:text-sm text-gray-700 text-left">Hora de entrada: {local.horario_atencion}</p>
             <p className="mt-1 mb-1 font-normal text-xs sm:text-sm text-gray-700 flex items-center text-left">Calificación: {local.valoracion} <StarIcon /></p>
           </div>
-        </a>
+        </div>
       ))}
     </div>
   );
