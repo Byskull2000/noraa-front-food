@@ -7,6 +7,25 @@ import useUserLocation from '../utiles/geolocalizadores/useUserLocation';
 import 'leaflet/dist/leaflet.css';
 import useGeocoder from '../utiles/geolocalizadores/Geocoder';
 import TagPopup from '../elementos/TagPopUp';
+import dynamic from 'next/dynamic';
+
+// Importaciones dinámicas
+const DynamicMapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false });
+const DynamicTileLayer = dynamic(() => import('react-leaflet').then(mod => mod.TileLayer), { ssr: false });
+
+const MapEventHandler: React.FC<{ setLatitud: React.Dispatch<React.SetStateAction<number>>, setLongitud: React.Dispatch<React.SetStateAction<number>> }> = ({ setLatitud, setLongitud }) => {
+    const { useMapEvents } = require('react-leaflet');
+    const map = useMapEvents({
+        moveend: () => {
+            const center = map.getCenter();
+            const latC = parseFloat(center.lat.toFixed(5));
+            const lngC = parseFloat(center.lng.toFixed(5));
+            setLatitud(latC);
+            setLongitud(lngC);
+        },
+    });
+    return null;
+};
 
 
 const RegistroRestaurante: React.FC = () => {
@@ -29,6 +48,8 @@ const RegistroRestaurante: React.FC = () => {
     const [intentoSumbit, setIntentoSumbit] = useState(false);
 
     const { direccion: direccionGeocoder } = useGeocoder({ lat: latitud, lng: longitud });
+
+    
 
     useEffect(() => {
         if (primerUso && userLocationLat !== undefined && userLocationLng !== undefined) {
@@ -325,13 +346,14 @@ const RegistroRestaurante: React.FC = () => {
                         Aceptar
                     </button>
 
-                    <MapContainer
-                        center={[latitud, longitud]} zoom={13}
+                    <DynamicMapContainer
+                        center={[latitud, longitud]} 
+                        zoom={13}
                         style={{ width: '100%', height: '100%', zIndex: '1' }}
                     >
-                        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                        <DynamicTileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                         <MapEventHandler />
-                    </MapContainer>
+                    </DynamicMapContainer>
 
                     <div style={{
                         position: 'absolute', top: '50%', left: '50%',
