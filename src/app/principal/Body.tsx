@@ -45,7 +45,6 @@ const Body = () => {
                     <>
                         <div className="lg:w-full">
                             <h1 className="lg:font-bold lg:ml-8 lg:mt-11 xl:text-2xl font-bold mt-5 ml-3 text-lg">¿Qué buscas hoy?</h1> 
-                            <h1 className="lg:ml-10"> <Carrusel></Carrusel></h1>
                             <a href="./todosPage">
                                 <img src="negocios4.jpg" className="mt-5 mx-auto rounded-xl w-11/12 lg:h-48 transition-transform duration-300 hover:scale-105 h-20" alt="Todos Negocios"/>
                             </a>
