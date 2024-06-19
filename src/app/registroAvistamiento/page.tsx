@@ -1,4 +1,4 @@
-import RegistroAvistamiento from "./registroAvistamiento"
+import RegistroAvistamiento from "./RegistroAvistamiento"
 
 const page = () => {
     return(
