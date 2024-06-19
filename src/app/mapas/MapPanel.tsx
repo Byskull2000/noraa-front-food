@@ -5,6 +5,8 @@ import L from 'leaflet';
 import { cargarRestaurantes } from '../utiles/consultores/restaurantes';
 import { cargarAvistamientos } from '../utiles/consultores/avistamientos';
 import ImgConstructor from '../utiles/multimedia/ImgConstructor';
+import { useRouter } from 'next/navigation';  // Importa desde 'next/navigation'
+import router from 'next/router';
 
 const StarIcon = () => (
   <span className="ml-1 sm:ml-2">
@@ -24,9 +26,9 @@ const MapPanel: React.FC<MapPanelProps> = ({ centro }: MapPanelProps) => {
   const [restauranteSeleccionado, setRestauranteSeleccionado] = useState<any>(null);
   const [showDetail, setShowDetail] = useState(false);
 
-  const handleCardClick = (id: string) => {
+  const handleCardClick = (id: string, nombre: string) => {
     localStorage.setItem('selectedRestaurantId', id);
-    window.location.href = 'paginaRestaurante';  // Redirige a la nueva página
+    router.push(`/paginaRestaurante/${encodeURIComponent(nombre)}`);
   };
 
   useEffect(() => {
@@ -137,7 +139,7 @@ const MapPanel: React.FC<MapPanelProps> = ({ centro }: MapPanelProps) => {
             onClick={(e) => e.stopPropagation()}
           >
             <a href="paginaRestaurante" key={restauranteSeleccionado.id_restaurante} 
-              onClick={() => handleCardClick(restauranteSeleccionado.id_restaurante)} // Attach click event handler
+              onClick={() => handleCardClick(restauranteSeleccionado.id_restaurante, restauranteSeleccionado.nombre_restaurante)} // Attach click event handler
               className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 sm:items-start sm:place-items-start" style={{ textDecoration: 'none', margin: '1%', width: '48%', maxWidth: '48%' }}>
                 {restauranteSeleccionado.imagen && (
                   <ImgConstructor
