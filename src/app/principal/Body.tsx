@@ -10,11 +10,11 @@ import DashboardCercanos from '../elementos/dashboardCercanos';
 import { useRouter } from 'next/router';
 
 const Body = () => {
+    const router = useRouter();
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const userLocationLat = useUserLocation()?.lat;
     const userLocationLng = useUserLocation()?.lng;
     const { direccion } = useGeocoder({ lat: userLocationLat ? userLocationLat : 0, lng: userLocationLng ? userLocationLng : 0 });
-    const router = useRouter();
 
     const openModal = () => {
         setModalIsOpen(true);
@@ -24,13 +24,8 @@ const Body = () => {
         setModalIsOpen(false);
     };
 
-    const handleNavigate = (path: string) => {
-        router.push(path);
-    };
-
-    const handleCardClick = (id: string) => {
-        localStorage.setItem('selectedRestaurantId', id);
-        handleNavigate('/paginaRestaurante');
+    const handleTodosPageClick = () => {
+        router.push('/todosPage'); // Ejemplo de redirección a '/todosPage'
     };
 
     return (
@@ -85,14 +80,14 @@ const Body = () => {
                     <>
                         <div className="lg:w-full">
                             <h1 className="lg:font-bold lg:ml-8 lg:mt-11 xl:text-2xl font-bold mt-5 ml-3 text-lg">¿Qué buscas hoy?</h1> 
-                            <h1 className="lg:ml-10"> <Carrusel /></h1>
-                            <a href="./todosPage">
+                            <h1 className="lg:ml-10"> <Carrusel></Carrusel></h1>
+                            <button onClick={handleTodosPageClick}>
                                 <img src="negocios4.jpg" className="mt-5 mx-auto rounded-xl w-11/12 lg:h-48 transition-transform duration-300 hover:scale-105 h-20" alt="Todos Negocios"/>
-                            </a>
+                            </button>
                         </div>
                         <h1 className="lg:font-bold lg:ml-8 lg:mt-11 xl:text-2xl font-bold mt-5 ml-3 text-lg">Negocios cercanos a ti</h1> 
                         <DashboardCercanos centro={[(userLocationLng != null) ? userLocationLng : 0.0, (userLocationLat != null) ? userLocationLat : 0.0]} /> 
-                        <PiePagina />
+                
                     </>
                 )}
             </div>
