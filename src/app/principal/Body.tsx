@@ -67,7 +67,7 @@ const Body = () => {
                             >
                             Volver
                             </button>
-                {/*<MapPanel centro={[(userLocationLat != null) ? userLocationLat : 0.0, (userLocationLng != null) ? userLocationLng : 0.0]} />*/}
+                {<MapPanel centro={[(userLocationLat != null) ? userLocationLat : 0.0, (userLocationLng != null) ? userLocationLng : 0.0]} />}
             </Modal>
 
             <div className="lg:w-full">

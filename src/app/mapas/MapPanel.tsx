@@ -64,65 +64,14 @@ const MapPanel: React.FC<MapPanelProps> = ({ centro }: MapPanelProps) => {
   return (
     <div onClick={handleMapClick}>
       <div style={{ height: '100vh', width: '100%', position: 'relative' }}>
-        <MapContainer center={centro} zoom={16} minZoom={10} maxZoom={20}
-          maxBounds={[[-90, -180], [90, 180]]}
-          style={{ height: '100%', width: '100%' }}
-        >
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          />
-          <Circle center={centro} radius={700} />
-          <Marker position={centro} icon={L.icon({
-            iconUrl: 'ubActual.png',
-            iconSize: [32, 32],
-            iconAnchor: [16, 16],
-            popupAnchor: [0, -16],
-          })} />
 
-          {/* Marcadores de restaurantes */}
-          {restaurantes.map((restaurante) => (
-            <Marker
-              key={restaurante.id_restaurante}
-              position={[restaurante.coordenada_latitud, restaurante.coordenada_longitud]}
-              icon={L.icon({
-                iconUrl: restaurante.icono_base + ".png",
-                iconSize: [32, 32],
-                iconAnchor: [16, 16],
-                popupAnchor: [0, -16],
-              })}
-              eventHandlers={{
-                click: (e) => {
-                  e.originalEvent.stopPropagation();
-                  handleMarkerClick(restaurante);
-                },
-              }}
-            >
-              <Popup>
-                <h3>{restaurante.nombre_restaurante}</h3>
-              </Popup>
-            </Marker>
-          ))}
-
-          {avistamientos.map((avistamiento) => (
-            <Marker
-              key={avistamiento.id_avistamiento}
-              position={[avistamiento.coordenada_latitud, avistamiento.coordenada_longitud]}
-              icon={L.icon({
-                iconUrl: avistamiento.icono + ".png",
-                iconSize: [32, 32],
-                iconAnchor: [16, 16],
-                popupAnchor: [0, -16],
-              })}
-            >
-              <Popup>
-                <div>
-                  <h3>{avistamiento.nombre_restaurante}</h3>
-                </div>
-              </Popup>
-            </Marker>
-          ))}
-        </MapContainer>
+        <MapContainer
+                        center={centro} zoom={13}
+                        style={{ width: '100%', height: '100%', zIndex: '1' }}
+                    >
+                        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+  
+                    </MapContainer>
 
         {showDetail && restauranteSeleccionado && (
           <div
