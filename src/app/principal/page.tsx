@@ -10,7 +10,7 @@ const Page = () => {
     <div className="overflow-hidden">
       
       <Header />
-      
+      <Body />
       <PiePagina />
     </div>
   );
