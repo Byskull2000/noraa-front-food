@@ -12,7 +12,7 @@ const Page = () => {
     router.push('/paginaRestaurante');
   };
   return ( 
-    <div className="overflow-hidden">
+    <div className="overflow-hidden bg-white">
       <Header />
       <h1 className="font-bold text-2xl mt-6 ml-6 mb-4">Cafeterías y Postres</h1>
       <ListaLocales etiqueta="cafe" onCardClick={handleCardClick} />

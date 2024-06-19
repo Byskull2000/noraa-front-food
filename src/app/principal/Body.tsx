@@ -38,7 +38,7 @@ const Body = () => {
 
     return (
         <>
-            <div className="block text-center lg:float-right lg:mr-4">
+            <div className="block text-center lg:float-right lg:mr-4 bg-white">
                 <button 
                     className="mt-6 w-64 sm:w-80 lg:w-auto lg:h-12 h-12 flex items-center justify-center space-x-2 bg-orange-400 text-white px-4 py-2 rounded-full mx-auto hover:bg-orange-500"
                     onClick={openModal}

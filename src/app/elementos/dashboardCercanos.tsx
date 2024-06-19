@@ -50,7 +50,7 @@ const DashboardCercanos = ({ centro }: MapPanelProps) => {
                         />
                     )}
                     <div className="flex flex-col p-4 leading-normal text-left sm:text-left mr-12" style={{ width: '48%' }}>
-                        <h5 className="mb-2 lg:text-xl font-bold tracking-tight text-gray-900 dark:text-white text-sm">{restaurante.nombre_restaurante}</h5>
+                        <h5 className="mb-2 lg:text-xl font-bold tracking-tight text-gray-900">{restaurante.nombre_restaurante}</h5>
                         <p className="mt-1 font-normal text-xs lg:text-sm text-gray-700 text-left">Hora de entrada: {restaurante.horario_atencion}</p>
                         <p className="mt-1 mb-1 font-normal text-xs sm:text-sm text-gray-700 flex items-center text-left">Calificación: {restaurante.valoracion} <StarIcon /></p>
                     </div>

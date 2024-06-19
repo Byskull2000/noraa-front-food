@@ -14,7 +14,7 @@ const Page = () => {
   };
 
   return ( 
-    <div className="overflow-hidden">
+    <div className="overflow-hidden bg-white">
       <Header />
       <h1 className="font-bold text-2xl mt-6 ml-6 mb-4">Todos los negocios</h1>
       <ListaLocales etiqueta="" onCardClick={handleCardClick} />

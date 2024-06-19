@@ -9,7 +9,7 @@ import SearchBar from "../elementos/SearchBar";
 
 const Header = () => {
   return (
-    <Popover className="w-full flex items-center border-b-2 px-10 py-2 h-24">
+    <Popover className="w-full flex items-center border-b-2 px-10 py-2 h-24 bg-white">
       <a href="home" className="flex">
         <img src="noraaOrange.png" className="w-40 h-40 mr-2 hidden sm:block" alt="Noraa Orange Image"/>
         <img src="noraaMini.png" className="w-20 h-10 mr-1 lg:hidden sm:block ml-[-1rem]" alt="Noraa Mini Image"/>
