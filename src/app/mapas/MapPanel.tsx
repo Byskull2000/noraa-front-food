@@ -6,7 +6,6 @@ import { cargarRestaurantes } from '../utiles/consultores/restaurantes';
 import { cargarAvistamientos } from '../utiles/consultores/avistamientos';
 import ImgConstructor from '../utiles/multimedia/ImgConstructor';
 import { useRouter } from 'next/navigation';  // Importa desde 'next/navigation'
-import router from 'next/router';
 
 const StarIcon = () => (
   <span className="ml-1 sm:ml-2">
@@ -25,6 +24,7 @@ const MapPanel: React.FC<MapPanelProps> = ({ centro }: MapPanelProps) => {
   const [avistamientos, setAvistamientos] = useState<any[]>([]);
   const [restauranteSeleccionado, setRestauranteSeleccionado] = useState<any>(null);
   const [showDetail, setShowDetail] = useState(false);
+  const router = useRouter();
 
   const handleCardClick = (id: string, nombre: string) => {
     localStorage.setItem('selectedRestaurantId', id);
