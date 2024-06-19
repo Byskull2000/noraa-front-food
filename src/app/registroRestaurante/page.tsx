@@ -5,7 +5,6 @@ const Page = () => {
 
   return ( 
     <div className="overflow-hidden">
-      <RegistroRestaurante />
     </div>
   );
 };
