@@ -38,44 +38,14 @@ const Body = () => {
                 </button>
             </div>
 
-            <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={closeModal}
-                contentLabel="Mapa Modal"
-                style={{
-                    content: {
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        right: 'auto',
-                        bottom: 'auto',
-                        background: 'transparent',
-                        border: 'none',
-                        padding: '0',
-                        marginRight: '-50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: '100%',
-                        height: '100%',
-                        justifyContent: 'center', alignItems: 'center'
-                    },
-                }}
-            >
-                <button 
-                            className="mb-3 mr-4 accept-button mt-0 tracking-wide font-semibold bg-orange-400 text-white py-3 px-5 rounded-3xl hover:bg-orange-500 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none" 
-                            style={{ position: 'absolute', bottom: '20px', right: '10px', zIndex: '1100' }} 
-                            onClick={closeModal}
-                            >
-                            Volver
-                            </button>
-                <MapPanel centro={[(userLocationLat != null) ? userLocationLat : 0.0, (userLocationLng != null) ? userLocationLng : 0.0]} />
-            </Modal>
+            
 
             <div className="lg:w-full">
                 {!modalIsOpen && (
                     <>
                         <div className="lg:w-full">
                             <h1 className="lg:font-bold lg:ml-8 lg:mt-11 xl:text-2xl font-bold mt-5 ml-3 text-lg">¿Qué buscas hoy?</h1> 
-                            
+                            <h1 className="lg:ml-10"> <Carrusel></Carrusel></h1>
                             <a href="./todosPage">
                                 <img src="negocios4.jpg" className="mt-5 mx-auto rounded-xl w-11/12 lg:h-48 transition-transform duration-300 hover:scale-105 h-20" alt="Todos Negocios"/>
                             </a>
