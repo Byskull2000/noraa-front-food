@@ -28,9 +28,8 @@ const MapPanel: React.FC<MapPanelProps> = ({ centro }: MapPanelProps) => {
 
   const handleCardClick = (id: string) => {
     localStorage.setItem('selectedRestaurantId', id);
-    if (typeof window !== 'undefined') {
       router.push('/paginaRestaurante'); // Redirige usando next/router
-    }
+
   };
 
   useEffect(() => {
