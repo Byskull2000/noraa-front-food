@@ -50,8 +50,8 @@ const Body = () => {
                             </a>
                         </div>
                         <h1 className="lg:font-bold lg:ml-8 lg:mt-11 xl:text-2xl font-bold mt-5 ml-3 text-lg">Negocios cercanos a ti</h1> 
-            
-                        
+                        <DashboardCercanos centro={[(userLocationLng != null) ? userLocationLng : 0.0, (userLocationLat != null) ? userLocationLat : 0.0]} /> 
+                        <PiePagina />
                     </>
                 )}
             </div>
