@@ -1,4 +1,4 @@
-import RegistroMenu from "./RegistroMenu";
+import RegistroMenu from "./registroMenu";
 
 const Page = () =>{
     return(
