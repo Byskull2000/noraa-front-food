@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
 
 // Define un tipo para el objeto imageUrls con una firma de índice
 type ImageUrls = {
@@ -6,23 +6,7 @@ type ImageUrls = {
 };
 
 const Carrusel = () => {
-    const [windowSize, setWindowSize] = useState(window.innerWidth);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setWindowSize(window.innerWidth);
-        };
-
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
-
     const renderImages = () => {
-        const isMobile = windowSize < 768; 
-
         // Define la URL a la que deseas redirigir para cada imagen
         const imageUrls: ImageUrls = {
             restaurantes: "./restaurantesPage",
@@ -38,9 +22,9 @@ const Carrusel = () => {
                         <a href={imageUrls[imageName]}>
                             <img
                                 className="h-auto max-w-full rounded-lg hover:cursor-pointer hover:transform lg:hover:scale-105 transition duration-300 ease-in-out"
-                                style={{ maxWidth: isMobile ? "190px" : "none", width: "90%" }}
                                 src={`${imageName}.png`}
                                 alt={imageName} 
+                               
                             />
                         </a>
                     </div>

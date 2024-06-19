@@ -8,15 +8,13 @@ import Carrusel from '../carrusel';
 import PiePagina from './piePagina';
 import useGeocoder from '../utiles/geolocalizadores/Geocoder';
 import DashboardCercanos from '../elementos/dashboardCercanos';
-import { useRouter } from 'next/navigation';
 
 const Body = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const userLocationLat = useUserLocation()?.lat;
     const userLocationLng = useUserLocation()?.lng;
     const { direccion } = useGeocoder({ lat: userLocationLat ? userLocationLat : 0, lng: userLocationLng ? userLocationLng : 0 });
-    const router = useRouter();
-    
+
     const openModal = () => {
         setModalIsOpen(true);
     };
@@ -24,11 +22,6 @@ const Body = () => {
     const closeModal = () => {
         setModalIsOpen(false);
     };
-
-    const handleCardClick = (id: string) => {
-        localStorage.setItem('selectedRestaurantId', id);
-        router.push('/paginaRestaurante');
-      };
 
     return (
         <>
@@ -74,7 +67,7 @@ const Body = () => {
                             >
                             Volver
                             </button>
-                {<MapPanel centro={[(userLocationLat != null) ? userLocationLat : 0.0, (userLocationLng != null) ? userLocationLng : 0.0]} onCardClick={handleCardClick}/>}
+                <MapPanel centro={[(userLocationLat != null) ? userLocationLat : 0.0, (userLocationLng != null) ? userLocationLng : 0.0]} />
             </Modal>
 
             <div className="lg:w-full">
@@ -82,7 +75,7 @@ const Body = () => {
                     <>
                         <div className="lg:w-full">
                             <h1 className="lg:font-bold lg:ml-8 lg:mt-11 xl:text-2xl font-bold mt-5 ml-3 text-lg">¿Qué buscas hoy?</h1> 
-                            <h1 className="lg:ml-10"> {/*<Carrusel></Carrusel>*/}</h1>
+                            <h1 className="lg:ml-10"> <Carrusel></Carrusel></h1>
                             <a href="./todosPage">
                                 <img src="negocios4.jpg" className="mt-5 mx-auto rounded-xl w-11/12 lg:h-48 transition-transform duration-300 hover:scale-105 h-20" alt="Todos Negocios"/>
                             </a>

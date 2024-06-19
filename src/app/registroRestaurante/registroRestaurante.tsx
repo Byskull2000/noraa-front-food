@@ -8,6 +8,7 @@ import 'leaflet/dist/leaflet.css';
 import useGeocoder from '../utiles/geolocalizadores/Geocoder';
 import TagPopup from '../elementos/TagPopUp';
 
+
 const RegistroRestaurante: React.FC = () => {
     const [primerUso, setPrimerUso] = useState(true);
     const userLocationLat = useUserLocation()?.lat;
@@ -16,18 +17,18 @@ const RegistroRestaurante: React.FC = () => {
     const [nombre, setNombre] = useState('');
     const [correo, setCorreo] = useState('');
     const [telefono, setTelefono] = useState('');
-    const [direccion, setDireccion] = useState<string>(''); 
+    const [direccion, setDireccion] = useState<string>('');
     const [horaEntrada, setHoraEntrada] = useState('');
     const [horaSalida, setHoraSalida] = useState('');
     const [icono, setIcono] = useState('');
     const [latitud, setLatitud] = useState(0);
-    const [longitud, setLongitud] = useState(0);  
+    const [longitud, setLongitud] = useState(0);
     const [imagen, setImagen] = useState<string>('');
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [intentoSumbit, setIntentoSumbit] = useState(false);
 
-    const { direccion: direccionGeocoder } = useGeocoder({ lat: latitud, lng: longitud});
+    const { direccion: direccionGeocoder } = useGeocoder({ lat: latitud, lng: longitud });
 
     useEffect(() => {
         if (primerUso && userLocationLat !== undefined && userLocationLng !== undefined) {
@@ -55,23 +56,6 @@ const RegistroRestaurante: React.FC = () => {
     };
 
     const [registroExitoso, setRegistroExitoso] = useState(false);
-    const [contador, setContador] = useState(10);
-
-    useEffect(() => {
-        let interval: NodeJS.Timeout;
-        if (registroExitoso) {
-            interval = setInterval(() => {
-                setContador((prevContador) => prevContador - 1);
-            }, 1000);
-        }
-        return () => clearInterval(interval);
-    }, [registroExitoso]);
-
-    useEffect(() => {
-        if (contador === 0) {
-            window.close();
-        }
-    }, [contador]);
 
     const playSuccessSound = () => {
         const audio = new Audio('correcto.mp3');
@@ -107,16 +91,16 @@ const RegistroRestaurante: React.FC = () => {
             if (response.ok) {
                 console.log('Restaurante registrado exitosamente');
                 setRegistroExitoso(true);
-                playSuccessSound();  
+                playSuccessSound();
             } else {
-                console.error('Error al registrar el restaurante:', response.statusText);  
+                console.error('Error al registrar el restaurante:', response.statusText);
             }
         } catch (error) {
-            console.error('Error al registrar el restaurante:', error);   
+            console.error('Error al registrar el restaurante:', error);
         }
     };
-    
-    
+
+
     const openModal = () => {
         setModalIsOpen(true);
     };
@@ -166,8 +150,19 @@ const RegistroRestaurante: React.FC = () => {
             <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
                 <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
                     <div>
-                        <h1 className="font-bold text-2xl mt-2">Registra tu negocio</h1>
+                        <h1 className="font-bold text-2xl mt-2 flex justify-between items-center">
+                            Registra tu negocio
+                            <a href="/home">
+                                <button
+                                    className="text-lg ml-4 tracking-wide font-semibold bg-orange-400 text-white w-24 py-2 rounded-3xl hover:bg-orange-500 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                                >
+                                    Salir
+                                </button>
+                            </a>
+
+                        </h1>
                     </div>
+
                     <form onSubmit={handleSubmit}>
                         <div className="mt-1 flex flex-col items-center">
                             <div className="w-full flex-1 mt-2">
@@ -212,16 +207,16 @@ const RegistroRestaurante: React.FC = () => {
                                         <span>{direccion}</span>
                                     </button>
                                     <div className="mt-5">
-                                       <h1 className="font-semibold">Subir Logo</h1>
-                                       <label htmlFor="logoInput" className={`ml-20 mt-2 cursor-pointer inline-block ${buttonColor} text-white px-4 py-2 rounded-xl transition duration-300 ease-in-out hover:bg-orange-500`}>
-                                             {buttonText}
-                                       </label>
-                                       <input
-                                          id="logoInput"
-                                          type="file"
-                                          accept="image/*"
-                                          onChange={(e) => handleFileUpload(e.target.files)}
-                                          className="hidden"
+                                        <h1 className="font-semibold">Subir Logo</h1>
+                                        <label htmlFor="logoInput" className={`ml-20 mt-2 cursor-pointer inline-block ${buttonColor} text-white px-4 py-2 rounded-xl transition duration-300 ease-in-out hover:bg-orange-500`}>
+                                            {buttonText}
+                                        </label>
+                                        <input
+                                            id="logoInput"
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={(e) => handleFileUpload(e.target.files)}
+                                            className="hidden"
                                         />
                                         {selectedFile && (
                                             <p className="mt-2">{selectedFile.name}</p>
@@ -229,10 +224,10 @@ const RegistroRestaurante: React.FC = () => {
                                         {imagen && ( // Agrega esta condición para mostrar la imagen
                                             <div className="flex justify-center items-center w-64 h-64 border border-gray-300 rounded-lg overflow-hidden">
                                                 <img src={imagen} alt="Imagen seleccionada" className="object-cover w-full h-full" />
-                                            </div>                                   
+                                            </div>
                                         )}
-                                       </div>
-                                   
+                                    </div>
+
                                     <div className="flex mt-5 font-semibold">
                                         <h1>Hora de entrada</h1>
                                         <h1 className="ml-10">Hora de salida</h1>
@@ -281,7 +276,7 @@ const RegistroRestaurante: React.FC = () => {
                                         </select>
                                         {intentoSumbit && !icono && <p className="text-red-500">Campo obligatorio</p>}
                                     </div>
-                                    <button 
+                                    <button
                                         className="mt-3 tracking-wide font-semibold bg-orange-400 text-white w-full py-4 rounded-3xl hover:bg-orange-500 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
                                         onClick={openTagPopup}
                                         type="button"
@@ -289,11 +284,11 @@ const RegistroRestaurante: React.FC = () => {
                                         Seleccionar etiquetas
                                     </button>
                                     {tagPopupOpen && (
-                                     <TagPopup 
-                                       selectedTags={selectedTags}
-                                       onUpdateTags={handleUpdateTags}
-                                       onClose={closeTagPopup}
-                                     />
+                                        <TagPopup
+                                            selectedTags={selectedTags}
+                                            onUpdateTags={handleUpdateTags}
+                                            onClose={closeTagPopup}
+                                        />
                                     )}
 
                                     <button
@@ -317,29 +312,31 @@ const RegistroRestaurante: React.FC = () => {
                     <div className="m-12 xl:m-16 w-full" />
                 </div>
             </div>
-            
+
             <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={{ overlay: { zIndex: 1000, backgroundColor: 'rgba(0, 0, 0, 0.5)' }, content: { position: 'absolute', top: '0', left: '0', right: '0', bottom: '0', border: 'none', background: 'transparent', padding: '0', display: 'flex', justifyContent: 'center', alignItems: 'center' } }}>
                 <div style={{ position: 'relative', width: '80%', height: '80%', zIndex: '1000' }}>
                     <h1 style={{ position: 'absolute', top: '10px', left: '10px' }}>Latitud: {latitud}</h1>
                     <h1 style={{ position: 'absolute', top: '40px', left: '10px' }}>Longitud: {longitud}</h1>
-                    <button 
-                            className="mb-3 mr-4 accept-button mt-3 tracking-wide font-semibold bg-orange-400 text-white py-3 px-5 rounded-3xl hover:bg-orange-500 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none" 
-                            style={{ position: 'absolute', bottom: '20px', right: '10px', zIndex: '1100' }} 
-                            onClick={closeModal}
-                            >
-                            Aceptar
-                            </button>
-            
-                    <MapContainer 
-                        center={[latitud, longitud]} zoom={13} 
+                    <button
+                        className="mb-3 mr-4 accept-button mt-3 tracking-wide font-semibold bg-orange-400 text-white py-3 px-5 rounded-3xl hover:bg-orange-500 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                        style={{ position: 'absolute', bottom: '20px', right: '10px', zIndex: '1100' }}
+                        onClick={closeModal}
+                    >
+                        Aceptar
+                    </button>
+
+                    <MapContainer
+                        center={[latitud, longitud]} zoom={13}
                         style={{ width: '100%', height: '100%', zIndex: '1' }}
                     >
                         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                         <MapEventHandler />
                     </MapContainer>
-                    
-                    <div style={{ position: 'absolute', top: '50%', left: '50%', 
-                                  transform: 'translate(-50%, -50%)', zIndex: '1000' }}
+
+                    <div style={{
+                        position: 'absolute', top: '50%', left: '50%',
+                        transform: 'translate(-50%, -50%)', zIndex: '1000'
+                    }}
                     >
                         <img src="miUbi.png" alt="icono" style={{ width: '32px', height: '32px' }} />
                     </div>
@@ -351,7 +348,7 @@ const RegistroRestaurante: React.FC = () => {
                 <div className="fixed bottom-0 left-0 w-full bg-green-500 flex justify-center items-center p-4">
                     <div>
                         <h1 className="text-2xl font-bold text-white">¡Restaurante registrado exitosamente!</h1>
-                        <p className="text-white">{`Cerrando la página automáticamente en ${contador} segundos`}</p>
+                        <h2 className="text-xl font-bold text-white">Puedes cerrar esta página</h2>
                     </div>
                 </div>
             )}
