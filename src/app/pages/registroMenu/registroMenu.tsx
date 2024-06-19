@@ -2,7 +2,7 @@
 import { cargarMenusDeUnRestaurante, cargarRestaurantesPorEmail } from '@/app/utiles/consultores/restaurantes';
 import React, { useEffect, useState } from 'react';
 
-const registroMenu: React.FC = () => {
+const RegistroMenu: React.FC = () => {
     const [nombre, setNombre] = useState('');
     const [intentoSumbit, setIntentoSumbit] = useState(false);
     const [registroExitoso, setRegistroExitoso] = useState(false);
@@ -214,4 +214,4 @@ const registroMenu: React.FC = () => {
     );
 };
 
-export default registroMenu;
+export default RegistroMenu;
